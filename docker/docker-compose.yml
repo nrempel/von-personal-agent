@@ -1,0 +1,19 @@
+version: "3"
+services:
+  personal-agent:
+    working_dir: /app
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      - PORT=7000
+    volumes:
+      - ../src:/app
+    networks:
+      - tob
+    ports:
+      - 7000:7000
+    command: hupper -m server
+
+networks:
+  ? tob
