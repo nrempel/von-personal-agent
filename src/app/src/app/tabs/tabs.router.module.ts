@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { TabsPage } from './tabs.page';
-import { HomePage } from '../home/home.page';
-import { AboutPage } from '../about/about.page';
-import { ContactPage } from '../contact/contact.page';
+import { MyCredentialsPage } from '../my-credentials/my-credentials.page';
+import { ScannerPage } from '../scanner/scanner.page';
 
 const routes: Routes = [
   {
@@ -13,29 +12,24 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/tabs/(home:home)',
+        redirectTo: '/tabs/(my-credentials:my-credentials)',
         pathMatch: 'full',
       },
       {
-        path: 'home',
-        outlet: 'home',
-        component: HomePage
+        path: 'my-credentials',
+        outlet: 'my-credentials',
+        component: MyCredentialsPage
       },
       {
-        path: 'about',
-        outlet: 'about',
-        component: AboutPage
-      },
-      {
-        path: 'contact',
-        outlet: 'contact',
-        component: ContactPage
+        path: 'scanner',
+        outlet: 'scanner',
+        component: ScannerPage
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/(home:home)',
+    redirectTo: '/tabs/(my-credentials:my-credentials)',
     pathMatch: 'full'
   }
 ];
