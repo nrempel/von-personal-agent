@@ -16,7 +16,7 @@ ROUTES = web.RouteTableDef()
 
 @ROUTES.get("/")
 async def index(request):
-    return web.FileResponse("public/index.html")
+    return web.FileResponse("app/www/index.html")
 
 
 if __name__ == "__main__":
