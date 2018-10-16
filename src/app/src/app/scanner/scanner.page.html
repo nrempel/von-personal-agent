@@ -4,4 +4,6 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <zxing-scanner #scanner start="true" [device]="device" (scanSuccess)="handleQrCodeResult($event)" [formats]="SUPPORTED_FORMATS"></zxing-scanner>
+</ion-content>
