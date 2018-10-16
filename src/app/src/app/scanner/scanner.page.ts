@@ -50,5 +50,8 @@ export class ScannerPage {
   handleQrCodeResult(resultString: string) {
     console.debug("Result: ", resultString);
     this.qrResultString = resultString;
+
+    const result = window.confirm(resultString)
+    console.log(result)
   }
 }
