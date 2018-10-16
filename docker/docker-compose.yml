@@ -1,19 +1,35 @@
 version: "3"
 services:
-  personal-agent:
+  server:
     working_dir: /app
     build:
       context: ..
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/Dockerfile.server
     environment:
       - PORT=7000
     volumes:
-      - ../src:/app
+      - ../server:/app
     networks:
       - tob
     ports:
       - 7000:7000
     command: hupper -m server
+
+  app:
+    working_dir: /app
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.app
+    # environment:
+    #   - PORT=7000
+    volumes:
+      - ../app:/app
+      - /app/node_modules
+    networks:
+      - tob
+    ports:
+      - 7100:7100
+    command: ionic serve --port 7100
 
 networks:
   ? tob

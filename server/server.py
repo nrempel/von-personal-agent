@@ -16,7 +16,7 @@ ROUTES = web.RouteTableDef()
 
 @ROUTES.get("/")
 async def index(request):
-    return web.FileResponse("app/www/index.html")
+    return web.json_response({"success": True})
 
 
 if __name__ == "__main__":
