@@ -73,6 +73,8 @@ async def login(request):
         await client.register_holder(
             holder_wallet_id, {"id": username, "name": username}
         )
+        
+        await client.sync()
         holder = await client.get_agent_status(username)
 
     return web.json_response({"success": True, "did": holder["did"]})
