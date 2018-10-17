@@ -29,13 +29,15 @@ INDY_CONFIG = {
 }
 
 
-def get_client():
+async def get_client():
     global INDY_MANAGER
     if not INDY_MANAGER:
         INDY_MANAGER = IndyManager(INDY_CONFIG)
         INDY_MANAGER.start()
 
-    return INDY_MANAGER.get_client()
+    client = INDY_MANAGER.get_client()
+    await client.sync()
+    return  client
 
 
 def build_failure_response(message=None):
@@ -65,7 +67,7 @@ async def login(request):
 
     userhash = md5(username.encode("utf-8")).hexdigest()
 
-    client = get_client()
+    client = await get_client()
     wallet_config = get_wallet_config(
         userhash, wallet_id=userhash, wallet_name=userhash
     )
@@ -82,7 +84,6 @@ async def login(request):
             holder_wallet_id, {"id": username, "name": username}
         )
 
-        await client.sync()
         holder = await client.get_agent_status(username)
 
     return web.json_response({"success": True, "did": holder["did"]})
