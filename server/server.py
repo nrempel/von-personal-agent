@@ -52,7 +52,12 @@ async def index(request):
 
 @ROUTES.post("/login")
 async def login(request):
-    data = await request.json()
+
+    try:
+        data = await request.json()
+    except Exception as e:
+        return build_failure_response(str(e))
+
     try:
         username = str(data["username"])
     except KeyError:
@@ -61,19 +66,22 @@ async def login(request):
     userhash = md5(username.encode("utf-8")).hexdigest()
 
     client = get_client()
-    wallet_config = get_wallet_config(userhash)
+    wallet_config = get_wallet_config(
+        userhash, wallet_id=userhash, wallet_name=userhash
+    )
 
     LOGGER.info("Registering holder service...")
     try:
         holder = await client.get_agent_status(username)
     except IndyClientError:
+
         holder_wallet_id = await client.register_wallet(wallet_config)
 
         LOGGER.info(f"Indy holder wallet id: {holder_wallet_id}")
         await client.register_holder(
             holder_wallet_id, {"id": username, "name": username}
         )
-        
+
         await client.sync()
         holder = await client.get_agent_status(username)
 
