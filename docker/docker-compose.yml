@@ -6,13 +6,16 @@ services:
       context: ..
       dockerfile: docker/Dockerfile.server
     environment:
-      - PORT=7000
+      - LEDGER_URL=${LEDGER_URL}
+      - LEDGER_PROTOCOL_VERSION=${LEDGER_PROTOCOL_VERSION}
+      - GENESIS_URL=${GENESIS_URL}
     volumes:
       - ../server:/app
     networks:
       - tob
     ports:
       - 7000:7000
+    # command: hupper -m server
     command: hupper -m server
 
   app:
