@@ -17,7 +17,6 @@ export class LoginPage {
 
   login(username) {
     this.authService.login(username).subscribe(did => {
-      alert(did)
       this.navCtrl.navigateRoot("");
     });
   }

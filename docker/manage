@@ -42,7 +42,7 @@ EOF
 # -----------------------------------------------------------------------------------------------------------------
 # Default Settings:
 # -----------------------------------------------------------------------------------------------------------------
-DEFAULT_CONTAINERS="server app"
+DEFAULT_CONTAINERS="caddy server app"
 
 # -----------------------------------------------------------------------------------------------------------------
 # Functions:
@@ -155,17 +155,6 @@ build)
   _startupParams=$(getStartupParams $@)
   configureEnvironment $@
   docker-compose build
-#   case "$@" in
-#   server)
-#     build-server
-#     ;;
-#   app)
-#     app
-#     ;;
-#   *)
-#     buildImages
-#     ;;
-#   esac
   ;;
 *)
   usage

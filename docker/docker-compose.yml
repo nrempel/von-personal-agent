@@ -1,5 +1,21 @@
 version: "3"
 services:
+  caddy:
+    image: "abiosoft/caddy:no-stats"
+    # environment:
+
+    links:
+      - server
+    # external_links:
+    #   - tob_tob-api_1:tob-api
+    networks:
+      - pa
+    ports:
+      - ${WEB_HTTP_PORT:-7000}:80
+      - ${WEB_HTTPS_PORT:-7443}:443
+    volumes:
+      - ../caddy/Caddyfile:/etc/Caddyfile
+
   server:
     working_dir: /app
     build:
@@ -12,9 +28,9 @@ services:
     volumes:
       - ../server:/app
     networks:
-      - tob
-    ports:
-      - 7000:7000
+      - pa
+    # ports:
+    #   - 7000:7000
     # command: hupper -m server
     command: hupper -m server
 
@@ -29,10 +45,10 @@ services:
       - ../app:/app
       - /app/node_modules
     networks:
-      - tob
+      - pa
     ports:
       - 7100:7100
     command: ionic serve --port 7100
 
 networks:
-  ? tob
+  ? pa

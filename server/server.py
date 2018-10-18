@@ -5,6 +5,7 @@ import logging
 from hashlib import md5
 
 from aiohttp import web
+import aiohttp_cors
 
 from vonx.indy.manager import IndyManager
 from vonx.indy.errors import IndyClientError
@@ -98,6 +99,20 @@ async def boot(app):
 if __name__ == "__main__":
     APP.add_routes(ROUTES)
     APP.on_startup.append(boot)
+
+    # Disable CORS on all routes.
+    cors = aiohttp_cors.setup(
+        APP,
+        defaults={
+            "*": aiohttp_cors.ResourceOptions(
+                allow_credentials=True, expose_headers="*", allow_headers="*"
+            )
+        },
+    )
+
+    for route in list(APP.router.routes()):
+        cors.add(route)
+
     LOGGER.info("Running webserver...")
     web.run_app(APP, host="0.0.0.0", port=7000)
 

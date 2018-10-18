@@ -1,0 +1,9 @@
+{%WEB_HOST_NAME%}:80, {%WEB_HOST_NAME%}:443 {
+    log /dev/stdout
+    root /srv/
+    tls self_signed
+
+    proxy / server:7000 {
+        transparent
+    }
+}
