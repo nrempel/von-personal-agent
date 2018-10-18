@@ -5,10 +5,21 @@
       <!-- <ion-card-header>
         Some info goes here
       </ion-card-header> -->
-      <ion-item>
-          <ion-input placeholder="username" type="text"></ion-input>
-      </ion-item>
-      <ion-button size="large">Log in</ion-button>
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked">Username</ion-label>
+          <ion-input placeholder="johndoe55"></ion-input>
+        </ion-item>
+      </ion-list>
+
+      <div text-center>
+        <ion-button size="large" (click)="login()">
+          <span *ngIf="!authService.fetching">Log in</span>
+          <ion-spinner *ngIf="authService.fetching"></ion-spinner>
+        </ion-button>
+      </div>
+
+
     </ion-card-content>
   </ion-card>
 </ion-content>
