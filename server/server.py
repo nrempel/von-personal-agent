@@ -36,8 +36,7 @@ async def get_client():
         INDY_MANAGER.start()
 
     client = INDY_MANAGER.get_client()
-    await client.sync()
-    return  client
+    return client
 
 
 def build_failure_response(message=None):
@@ -68,6 +67,7 @@ async def login(request):
     userhash = md5(username.encode("utf-8")).hexdigest()
 
     client = await get_client()
+
     wallet_config = get_wallet_config(
         userhash, wallet_id=userhash, wallet_name=userhash
     )
@@ -83,6 +83,8 @@ async def login(request):
         await client.register_holder(
             holder_wallet_id, {"id": username, "name": username}
         )
+
+        await client.sync()
 
         holder = await client.get_agent_status(username)
 
