@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 
-import { Observable, of } from "rxjs";
-import { tap, delay } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { tap, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -13,10 +13,14 @@ export class AuthService {
   fetching = false;
   redirectUrl: string;
 
-  login(): Observable<boolean> {
+  baseUrl = "http://localhost:7000";
+
+  constructor(private http: HttpClient) {}
+
+  login(username: String): Observable<Object> {
     this.fetching = true;
-    return of(true).pipe(
-      delay(1000),
+    return this.http.post(`${this.baseUrl}/login`, { username }).pipe(
+      map(result => result['did']),
       tap(() => (this.isLoggedIn = true)),
       tap(() => (this.fetching = false))
     );

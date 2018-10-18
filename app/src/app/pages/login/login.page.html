@@ -8,12 +8,12 @@
       <ion-list>
         <ion-item>
           <ion-label position="stacked">Username</ion-label>
-          <ion-input placeholder="johndoe55"></ion-input>
+          <ion-input placeholder="johndoe55" #usernameInput></ion-input>
         </ion-item>
       </ion-list>
 
       <div text-center>
-        <ion-button size="large" (click)="login()">
+        <ion-button size="large" (click)="login(usernameInput.value)">
           <span *ngIf="!authService.fetching">Log in</span>
           <ion-spinner *ngIf="authService.fetching"></ion-spinner>
         </ion-button>
